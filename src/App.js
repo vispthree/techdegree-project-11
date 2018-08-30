@@ -39,7 +39,7 @@ class App extends Component {
         this.setState({
           galleryItems: response.data.photos
         })
-        console.log(`first title: ${this.state.photo[0].title}`);
+        console.log(`first title: ${this.state.galleryItems.photo[0].title}`);
      })
      .catch(error => {
        console.log('Error fetching and parsing flickr data', error);
