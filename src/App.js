@@ -14,12 +14,12 @@ const GalleryItemList = props => {
 
   const results = props.data;
   let images = results.map(image =>
-    <GalleryItemHTML url={`https://www.flickr.com/photos${image.owner}/${image.id}`} />
+    <GalleryItemHTML url={`https://farm${image.farm}.staticflickr.com/${image.server}/${image.id}_${image.secret}.jpg`} />
   );
 
   return(
     <ul className="gallery-item-list">
-      {GalleryItemHTML}
+      {images}
     </ul>
   );
 }
@@ -34,12 +34,12 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=trees&format=json&nojsoncallback=1`)
+    axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=forest&format=json&nojsoncallback=1`)
       .then(response => {         
         this.setState({
-          galleryItems: response.data.photos
+          galleryItems: response.data.photos.photo
         })
-        console.log(`first title: ${this.state.galleryItems.photo[0].title}`);
+        console.log(`first title: ${this.state.galleryItems[0].title}`);
      })
      .catch(error => {
        console.log('Error fetching and parsing flickr data', error);
