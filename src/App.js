@@ -4,6 +4,25 @@ import './App.css';
 import axios from 'axios';
 import apiKey from './config';
 
+
+const Header = props => (
+
+  <div>
+  <Search />
+  <Navbar />
+  </div>
+
+);
+
+const Search = props => (
+  <p>search</p>
+);
+
+
+const Navbar = props => (
+  <p>forests/waterfalls/dogs</p>
+);
+
 const GalleryItemHTML = props => (
   <li className="gallery-item-wrap">
     <img src={props.url} alt=""/>
@@ -50,8 +69,9 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+
+          <Header />
+
         </header>
 
           <GalleryItemList data={this.state.galleryItems} />
