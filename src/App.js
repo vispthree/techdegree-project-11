@@ -10,18 +10,51 @@ import {
   Redirect
 } from 'react-router-dom';
 
-const Header = props => (
 
-  <div>
-  <Search />
-  <Navbar />
-  </div>
+class SearchForm extends React.Component {
 
-);
+  state = {
+    searchText: ''
+  }
 
-const Search = props => (
-  <p>search</p>
-);
+  onSearchChange = e => {
+    this.setState({ searchText: e.target.value });
+    console.log('search changed');
+  }
+
+  onSubmit = e => {
+    e.preventDefault();
+    /*<Dogs query={this.state.searchText} /> */    
+
+    this.performSearch(this.state.searchText);
+
+    
+
+    e.currentTarget.reset();
+  }
+
+  performSearch(query){
+
+    console.log(`search term rendered: ${query}`);
+    this.props.sendData(query);
+    this.props.history.push('/seach');  
+
+  }
+
+  render() {
+      return(
+        <form className="search--form" onSubmit={this.onSubmit} >
+          <input type="search"
+            onChange={this.onSearchChange}
+            name="search"
+            ref={(input) => this.query = input}
+            placeholder="Search" />
+          <button type="submit" id="submit" className="search--button">O</button>        
+        </form>
+      );
+  }
+
+}
 
 
 const Navbar = props => (
@@ -61,6 +94,16 @@ class Container extends React.Component {
 
     );
   }
+}
+
+const Search = props => {
+
+  return(
+    <div>
+      <h1>Search</h1>
+      <Container query={props.query} />      
+    </div>
+  );
 }
 
 const Forests = props => {
@@ -116,23 +159,28 @@ const GalleryItemList = props => {
 }
 
 class App extends Component {
-  
 
-    
+    getData(query){
+      console.log(`Search at top of app: ${query}`);
+      
+    }
+
     render() {    
       return (
         <BrowserRouter>
           <div className="App">
             <header className="App-header">            
               
-              <Header />            
+              <SearchForm sendData={this.getData}/>
+              <Navbar />         
 
             </header>            
 
-            <Route exact path="/" render={ () => <GalleryItemList data={this.state.galleryItems} />} />
+            <Route exact path="/" render={ () => <Forests query="forests" />} />
             <Route path="/forests" render={ () => <Forests query="forests" />} /> {/*Pass search term with nav select*/}
             <Route path="/waterfalls" render={ () => <Waterfalls query="waterfalls" />} />
-            <Route path="/dogs" render={ () => <Dogs query="shepherddog" />} />
+            <Route path="/dogs" render={ () => <Dogs query="shepherd dog" />} />
+            <Route path="/search" render={ () => <Search query={'balloon'} />} />
 
           </div>
         </BrowserRouter>
