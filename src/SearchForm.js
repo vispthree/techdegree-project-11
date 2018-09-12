@@ -28,8 +28,8 @@ class SearchForm extends React.Component {
     console.log(`search term rendered: ${query}`);
     this.props.sendData(query);
 
-    this.props.history.push('/search');
-      
+    this.props.history.push('/search');   
+    
     
   }
 
