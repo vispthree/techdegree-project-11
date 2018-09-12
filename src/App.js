@@ -20,13 +20,17 @@ const Navbar = props => (
 
 class Container extends React.Component {
 
-  state = {galleryItems: []}
+  state = {
+    galleryItems: [],
+    loading: true
+  }
 
   componentDidMount() {
     axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${this.props.query}&format=json&nojsoncallback=1`)
       .then(response => {         
         this.setState({
-          galleryItems: response.data.photos.photo
+          galleryItems: response.data.photos.photo,
+          loading: false
         })
         console.log(`first title: ${this.state.galleryItems[0].title}`);
     })
@@ -36,11 +40,21 @@ class Container extends React.Component {
   }
 
   render() {
-    return(
+      let content;
 
-    <GalleryItemList data={this.state.galleryItems} />
-
-    );
+      {
+        if (this.state.loading) {
+         content = <span>Loading...</span>;
+        }
+        else {
+          content = <GalleryItemList data={this.state.galleryItems} />;
+        }
+      }
+      return (
+        <div>
+          {content}
+        </div>
+      )
   }
 }
 

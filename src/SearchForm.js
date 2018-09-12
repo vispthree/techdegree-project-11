@@ -29,7 +29,7 @@ class SearchForm extends React.Component {
     this.props.sendData(query);
 
     this.props.history.push('/search');
-    Search.forceUpdate();   
+      
     
   }
 
