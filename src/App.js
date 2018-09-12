@@ -22,10 +22,11 @@ class Container extends React.Component {
 
   state = {
     galleryItems: [],
-    loading: true
+    loading: true,
   }
 
   componentDidMount() {
+    console.log(`container query: ${this.props.query}`);
     axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${this.props.query}&format=json&nojsoncallback=1`)
       .then(response => {         
         this.setState({
@@ -51,51 +52,110 @@ class Container extends React.Component {
         }
       }
       return (
-        <div>
+        <div>       
           {content}
         </div>
       )
   }
 }
 
-const Search = props => {
+class Search extends React.Component {
+  state = {    
+    searchQuery: '',
+  }
 
-  return(
-    <div>
-      <h1>Search</h1>
-      <Container query={props.query} />      
-    </div>
-  );
+  getData = query => {
+    console.log(`Search at top of app: ${query}`);
+    this.setState({ searchQuery: query }, function(){
+      console.log(`query state: ${this.state.searchQuery}`);
+    });      
+  }
+
+  render(){
+    return(
+      <div>
+        <SearchForm sendData={this.getData}/>
+        <Navbar /> 
+        <h1>Search</h1>        
+        <Container query={this.state.searchQuery} />      
+      </div>
+    );
+  }
 }
 
-const Forests = props => {
+class Forests extends React.Component {
 
-  return(
-    <div>
-      <h1>Forests</h1>
-      <Container query={props.query} />      
-    </div>
-  );
+  state = {    
+    searchQuery: ''
+  }
+
+  getData = query => {
+    console.log(`Search at top of app: ${query}`);
+    this.setState({ searchQuery: query }, function(){
+      console.log(`query state: ${this.state.searchQuery}`);
+    });      
+  }
+
+    render(){
+      return(
+        <div>
+          <SearchForm sendData={this.getData}/>
+          <Navbar /> 
+          <h1>Forests</h1>
+          <Container query={this.props.query} />      
+        </div>
+      );
+    }
 }
 
-const Waterfalls = props => {
+class Waterfalls extends React.Component {
 
-  return(
-    <div>
-      <h1>Waterfalls</h1>
-      <Container query={props.query} />      
-    </div>
-  );
+  state = {    
+    searchQuery: ''
+  }
+
+  getData = query => {
+    console.log(`Search at top of app: ${query}`);
+    this.setState({ searchQuery: query }, function(){
+      console.log(`query state: ${this.state.searchQuery}`);
+    });      
+  }
+
+  render(){
+    return(
+      <div>
+        <SearchForm sendData={this.getData}/>
+        <Navbar /> 
+        <h1>Waterfalls</h1>
+        <Container query={this.props.query} />      
+      </div>
+    );
+  }
 }
 
-const Dogs = props => {
+class Dogs extends React.Component {
 
-  return(
-    <div>
-      <h1>Dogs</h1>
-      <Container query={props.query} />      
-    </div>
-  );
+  state = {    
+    searchQuery: ''
+  }
+
+  getData = query => {
+    console.log(`Search at top of app: ${query}`);
+    this.setState({ searchQuery: query }, function(){
+      console.log(`query state: ${this.state.searchQuery}`);
+    });      
+  }
+
+    render(){
+      return(
+        <div>
+          <SearchForm sendData={this.getData}/>
+          <Navbar /> 
+          <h1>Dogs</h1>
+          <Container query={this.props.query} />      
+        </div>
+      );
+}
 }
 
 
@@ -123,30 +183,13 @@ const GalleryItemList = props => {
 class App extends Component {
 
 
-  constructor() {
-    super();
-    this.state = {
-      
-      searchQuery: 'cats'
-    };
-  }
-
-
-    getData = query => {
-      console.log(`Search at top of app: ${query}`);
-      this.setState({ searchQuery: query }, function(){
-        console.log(`query state: ${this.state.searchQuery}`);
-      });      
-    }
-
     render() {    
       return (
         <BrowserRouter>
           <div className="App">
             <header className="App-header">            
               
-              <SearchForm sendData={this.getData}/>
-              <Navbar />         
+                     
 
             </header>            
 
@@ -154,7 +197,7 @@ class App extends Component {
             <Route path="/forests" render={ () => <Forests query="forests" />} /> {/*Pass search term with nav select*/}
             <Route path="/waterfalls" render={ () => <Waterfalls query="waterfalls" />} />
             <Route path="/dogs" render={ () => <Dogs query="shepherd dog" />} />
-            <Route path="/search" render={ () => <Search query={this.state.searchQuery} />} />
+            <Route path="/search" render={ () => <Search />} />
 
           </div>
         </BrowserRouter>
