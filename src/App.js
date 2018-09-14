@@ -7,7 +7,7 @@ import SearchForm from './SearchForm';
 import {
   BrowserRouter,
   Route,
-  NavLink,
+  NavLink,  
 } from 'react-router-dom';
 
 const Navbar = props => (
@@ -20,10 +20,14 @@ const Navbar = props => (
 
 class Container extends React.Component {
 
-  state = {
-    galleryItems: [],
-    loading: true
+  constructor() {
+    super();
+    this.state = {
+      galleryItems: [],
+      loading: true
+    };
   }
+
 
   componentDidMount() {
     axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${this.props.query}&format=json&nojsoncallback=1`)
@@ -37,6 +41,23 @@ class Container extends React.Component {
     .catch(error => {
       console.log('Error fetching and parsing flickr data', error);
     });
+  }
+
+  componentDidUpdate(prevProps) {
+    console.log('container search updated');
+    if (this.props.query !== prevProps.query){
+      axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${this.props.query}&format=json&nojsoncallback=1`)
+        .then(response => {         
+          this.setState({
+            galleryItems: response.data.photos.photo,
+            loading: false
+          })
+          console.log(`first title: ${this.state.galleryItems[0].title}`);
+      })
+      .catch(error => {
+        console.log('Error fetching and parsing flickr data', error);
+      });
+    }
   }
 
   render() {
@@ -58,14 +79,26 @@ class Container extends React.Component {
   }
 }
 
-const Search = props => {
+class Search extends React.Component {
 
-  return(
-    <div>
-      <h1>Search</h1>
-      <Container query={props.query} />      
-    </div>
-  );
+  constructor() {
+    super();
+    this.state = {
+
+      query: ''
+    };
+  } 
+
+  render() {
+    
+    return(
+      
+      <div>
+        <h1>Search</h1>
+        <Container query={this.props.query} />      
+      </div>
+    );
+  }
 }
 
 const Forests = props => {
@@ -135,8 +168,8 @@ class App extends Component {
     getData = query => {
       console.log(`Search at top of app: ${query}`);
       this.setState({ searchQuery: query }, function(){
-        console.log(`query state: ${this.state.searchQuery}`);
-        this.forceUpdate();
+        console.log(`query state at to of app: ${this.state.searchQuery}`);
+        
       });      
     }
 
