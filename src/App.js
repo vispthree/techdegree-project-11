@@ -24,28 +24,14 @@ class Container extends React.Component {
     super();
     this.state = {
       galleryItems: [],
-      loading: true
+      loading: true,
+      noResults: false
     };
   }
 
 
   componentDidMount() {
-    axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${this.props.query}&format=json&nojsoncallback=1`)
-      .then(response => {         
-        this.setState({
-          galleryItems: response.data.photos.photo,
-          loading: false
-        })
-        console.log(`first title: ${this.state.galleryItems[0].title}`);
-    })
-    .catch(error => {
-      console.log('Error fetching and parsing flickr data', error);
-    });
-  }
-
-  componentDidUpdate(prevProps) {
-    console.log('container search updated');
-    if (this.props.query !== prevProps.query){
+    if (this.props.isSearch == false){
       axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${this.props.query}&format=json&nojsoncallback=1`)
         .then(response => {         
           this.setState({
@@ -57,6 +43,57 @@ class Container extends React.Component {
       .catch(error => {
         console.log('Error fetching and parsing flickr data', error);
       });
+  }
+    else if(this.props.isSearch == true){
+        axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${this.props.query}&format=json&nojsoncallback=1`)
+          .then(response => {         
+            this.setState({
+              galleryItems: response.data.photos.photo,
+              loading: false,
+              noResults: false
+            })
+            console.log(`first title: ${this.state.galleryItems[0].title}`);
+        })
+        .catch(error => {
+          this.setState({            
+            noResults: true
+          })
+        });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    console.log('container search updated');
+    if (this.props.query !== prevProps.query){
+      if (this.props.isSearch == false){
+          axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${this.props.query}&format=json&nojsoncallback=1`)
+            .then(response => {         
+              this.setState({
+                galleryItems: response.data.photos.photo,
+                loading: false
+              })
+              console.log(`first title: ${this.state.galleryItems[0].title}`);
+          })
+          .catch(error => {
+            console.log('Error fetching and parsing flickr data', error);
+          });
+      }
+        else if(this.props.isSearch == true){
+            axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${this.props.query}&format=json&nojsoncallback=1`)
+              .then(response => {         
+                this.setState({
+                  galleryItems: response.data.photos.photo,
+                  loading: false,
+                  noResults: false
+                })
+                console.log(`first title: ${this.state.galleryItems[0].title}`);
+            })
+            .catch(error => {
+              this.setState({            
+                noResults: true
+              })
+            });
+        }
     }
   }
 
@@ -68,7 +105,7 @@ class Container extends React.Component {
          content = <span>Loading...</span>;
         }
         else {
-          content = <GalleryItemList data={this.state.galleryItems} />;
+          content = <GalleryItemList data={this.state.galleryItems} noResults={this.state.noResults} />;
         }
       }
       return (
@@ -95,7 +132,7 @@ class Search extends React.Component {
       
       <div>
         <h1>Search</h1>
-        <Container query={this.props.query} />      
+        <Container query={this.props.query} isSearch={true} />      
       </div>
     );
   }
@@ -106,7 +143,7 @@ const Forests = props => {
   return(
     <div>
       <h1>Forests</h1>
-      <Container query={props.query} />      
+      <Container query={props.query} isSearch={false} />      
     </div>
   );
 }
@@ -116,7 +153,7 @@ const Waterfalls = props => {
   return(
     <div>
       <h1>Waterfalls</h1>
-      <Container query={props.query} />      
+      <Container query={props.query} isSearch={false} />      
     </div>
   );
 }
@@ -126,7 +163,7 @@ const Dogs = props => {
   return(
     <div>
       <h1>Dogs</h1>
-      <Container query={props.query} />      
+      <Container query={props.query} isSearch={false} />      
     </div>
   );
 }
@@ -141,16 +178,28 @@ const GalleryItemHTML = props => (
 
 const GalleryItemList = props => {
 
-  const results = props.data;
+  const results = props.data;  
+  
   let images = results.map(image =>
     <GalleryItemHTML url={`https://farm${image.farm}.staticflickr.com/${image.server}/${image.id}_${image.secret}.jpg`} />
   );
 
-  return(
-    <ul className="gallery-item-list">
-      {images}
-    </ul>
-  );
+  if (props.noResults == true){
+    return(
+      <p>
+        No results found
+      </p>
+    );
+  }
+
+  else {
+    return(
+      <ul className="gallery-item-list">
+        {images}
+      </ul>
+    );
+  }
+
 }
 
 class App extends Component {
