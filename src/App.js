@@ -7,7 +7,8 @@ import SearchForm from './SearchForm';
 import {
   BrowserRouter,
   Route,
-  NavLink,  
+  NavLink,
+  Switch
 } from 'react-router-dom';
 
 const Navbar = props => (
@@ -168,6 +169,16 @@ const Dogs = props => {
   );
 }
 
+const NotFound = props => {
+
+  return(
+    <div>
+      <h1>404</h1>
+      <p>Page not found!</p>     
+    </div>
+  );
+}
+
 
 
 const GalleryItemHTML = props => (
@@ -233,11 +244,14 @@ class App extends Component {
 
             </header>            
 
-            <Route exact path="/" render={ () => <Forests query="forests" />} />
-            <Route path="/forests" render={ () => <Forests query="forests" />} /> {/*Pass search term with nav select*/}
-            <Route path="/waterfalls" render={ () => <Waterfalls query="waterfalls" />} />
-            <Route path="/dogs" render={ () => <Dogs query="shepherd dog" />} />
-            <Route path="/search" render={ () => <Search query={this.state.searchQuery} />} />
+            <Switch>
+              <Route exact path="/" render={ () => <Forests query="forests" />} />
+              <Route path="/forests" render={ () => <Forests query="forests" />} /> {/*Pass search term with nav select*/}
+              <Route path="/waterfalls" render={ () => <Waterfalls query="waterfalls" />} />
+              <Route path="/dogs" render={ () => <Dogs query="shepherd dog" />} />
+              <Route path="/search" render={ () => <Search query={this.state.searchQuery} />} />
+              <Route component={NotFound} />
+            </Switch>
 
           </div>
         </BrowserRouter>
