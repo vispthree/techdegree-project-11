@@ -25,6 +25,7 @@ class App extends Component {
     };
   }
 
+  //Recieves query from the SearchForm
   getData = query => {
     console.log(`Search at top of app: ${query}`);
     this.setState({ searchQuery: query }, function(){
@@ -37,11 +38,13 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
 
+          {/* Generates Header */}
           <header className="header">
             <SearchForm sendData={this.getData}/>
             <Navbar />         
           </header>            
 
+          {/* Defines Routes */}
           <Switch>
             <Route exact path="/" render={ () => <Forests query="forests" />} />
             <Route path="/forests" render={ () => <Forests query="forests" />} /> {/*Pass search term with nav select*/}

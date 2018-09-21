@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Container from './Container';
+
+//Renders Forest images using Container
 
 const Forests = props => {
 
@@ -9,6 +11,7 @@ const Forests = props => {
       <Container query={props.query} isSearch={false} />      
     </div>
   );
+
 }
 
 export default Forests;

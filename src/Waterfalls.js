@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Container from './Container';
+
+//Renders Waterfall images using Container
 
 const Waterfalls = props => {
 
@@ -9,6 +11,7 @@ const Waterfalls = props => {
       <Container query={props.query} isSearch={false} />      
     </div>
   );
+
 }
 
 export default Waterfalls;

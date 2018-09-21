@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   NavLink
 } from 'react-router-dom';
 
-
+// Displays Navbar
 const Navbar = props => (
   <ul className="navbar">
     <NavLink to="/forests"><li>Forests</li></NavLink>

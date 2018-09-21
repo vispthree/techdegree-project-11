@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Container from './Container';
+
+//Renders Dog images using Container
 
 const Dogs = props => {
 
@@ -9,6 +11,7 @@ const Dogs = props => {
       <Container query={props.query} isSearch={false} />      
     </div>
   );
+
 }
 
 export default Dogs;

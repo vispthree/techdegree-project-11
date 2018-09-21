@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import Container from './Container';
+import React from 'react';
 
+//Renders 404 page
 const NotFound = props => {
 
   return(
@@ -9,6 +9,7 @@ const NotFound = props => {
       <p>Page not found!</p>     
     </div>
   );
+
 }
 
 export default NotFound;
