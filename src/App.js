@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 import apiKey from './config';
@@ -12,10 +11,10 @@ import {
 } from 'react-router-dom';
 
 const Navbar = props => (
-  <ul>
-    <li><NavLink to="forests">forests</NavLink></li>
-    <li><NavLink to="waterfalls">Waterfalls</NavLink></li>
-    <li><NavLink to="dogs">Dogs</NavLink></li>
+  <ul className="navbar">
+    <NavLink to="/forests"><li>Forests</li></NavLink>
+    <NavLink to="/waterfalls"><li>Waterfalls</li></NavLink>
+    <NavLink to="/dogs"><li>Dogs</li></NavLink>
   </ul>
 );
 
@@ -132,7 +131,7 @@ class Search extends React.Component {
     return(
       
       <div>
-        <h1>Search</h1>
+        <h1 className="page-title">Search</h1>
         <Container query={this.props.query} isSearch={true} />      
       </div>
     );
@@ -143,7 +142,7 @@ const Forests = props => {
 
   return(
     <div>
-      <h1>Forests</h1>
+      <h1 className="page-title">Forests</h1>
       <Container query={props.query} isSearch={false} />      
     </div>
   );
@@ -153,7 +152,7 @@ const Waterfalls = props => {
 
   return(
     <div>
-      <h1>Waterfalls</h1>
+      <h1 className="page-title">Waterfalls</h1>
       <Container query={props.query} isSearch={false} />      
     </div>
   );
@@ -163,7 +162,7 @@ const Dogs = props => {
 
   return(
     <div>
-      <h1>Dogs</h1>
+      <h1 className="page-title">Dogs</h1>
       <Container query={props.query} isSearch={false} />      
     </div>
   );
@@ -173,7 +172,7 @@ const NotFound = props => {
 
   return(
     <div>
-      <h1>404</h1>
+      <h1 className="page-title">404</h1>
       <p>Page not found!</p>     
     </div>
   );
@@ -237,7 +236,7 @@ class App extends Component {
       return (
         <BrowserRouter>
           <div className="App">
-            <header className="App-header">            
+            <header className="header">            
               
               <SearchForm sendData={this.getData}/>
               <Navbar />         

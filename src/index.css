@@ -2,4 +2,89 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  background-color: #f9fafa;
+}
+
+.header{  
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.search--form{
+  width: 100%;
+  margin: 100px auto 20px;
+  position: relative;
+  left: 18px;
+}
+
+.search--form input{
+  height: 45px;
+  width: 400px;
+  padding-left: 10px;
+  border-radius: 5px 0 0 5px;
+  background-color: #edeff0;
+  font-weight: bold;
+}
+
+.search--button{
+  background-color: #3f8abf;
+  border: none;
+  height: 43px;
+  width: 43px;
+  cursor: pointer;
+  border-radius: 0 5px 5px 0;
+}
+
+.navbar{
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.navbar li{
+  width: 100px;
+  background-color: #3f8abf;
+  padding: 7px 0;
+  margin: 0 20px;
+  border-radius: 5px;
+}
+
+.navbar .active li{
+  background-color: #245171;
+  
+}
+
+.navbar a{
+  text-decoration: none;
+  color: white;  
+  font-weight: bold;
+  font-size: 20;
+  letter-spacing: 1px;
+}
+
+.navbar a:visited{  
+  color: white;
+}
+
+.page-title{
+  position: relative;
+  left: 20px;
+}
+
+.gallery-item-list{
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+}
+
+.gallery-item-wrap{
+  width: 25%;
+  margin-bottom: 15px;
+}
+
+.gallery-item-wrap img {
+  width: 240px;
+  height: 140px;
 }

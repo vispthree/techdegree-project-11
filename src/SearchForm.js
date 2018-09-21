@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import searchglass from './images/search.svg';
 import {
   withRouter,
 } from 'react-router-dom';
@@ -41,7 +42,7 @@ class SearchForm extends React.Component {
             name="search"
             ref={(input) => this.query = input}
             placeholder="Search" />
-          <button type="submit" id="submit" className="search--button">O</button>        
+          <button type="submit" id="submit" className="search--button"><img src={searchglass} height="15px" width="15px" /> </button>        
         </form>
       );
   }
