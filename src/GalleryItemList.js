@@ -7,7 +7,7 @@ const GalleryItemList = props => {
   
   //Map flickr query using GalleryItemHTML
   let images = results.map(image =>
-    <GalleryItemHTML url={`https://farm${image.farm}.staticflickr.com/${image.server}/${image.id}_${image.secret}.jpg`} />
+    <GalleryItemHTML url={`https://farm${image.farm}.staticflickr.com/${image.server}/${image.id}_${image.secret}.jpg`} key={image.id} />
   );
 
   //Display no results message if no results found
