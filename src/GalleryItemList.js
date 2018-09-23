@@ -11,7 +11,7 @@ const GalleryItemList = props => {
   );
 
   //Display no results message if no results found
-  if (props.noResults === true){
+  if (props.noResults !== false){
     return(
       <p>
         No results found
